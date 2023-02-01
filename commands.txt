@@ -74,4 +74,96 @@ nodes:
 kubectl get nodes
 kubectl describe node 
 
+pod:
+create pod: kubectl create -f [pod-definition.yml]
+run a pod: kubectl run [podname] --image=busybox -- /bin/sh -c "sleep 3600"
+list the running pods: kubectl get pods 
+Same but with more info: kubectl discribe pod [podname]
+Extract the pod definition in YAML and save it to a file: kubectl get pod [podname] -o yaml > file.yaml
+Interactive mode: kubectl exec -it [podname] -- sh 
+Delete a pod: kubectl delete -f [pod-definition.yml] 
+kubectl delete pod [podname]
+kubectl delete pod mybox --grace-period=0 --force
+
+Create the deployment: kubectl apply -f myapp.yaml
+Wait for the main pod to come up: kubectl get pods 
+Connect to the Nginx container: kubectl exec -it init-demo -- /bin/bash
+hit the default webpage: curl localhost
+Get th ip of the pod: kubectl get po -o wide
+Get the service endpoint: kubectl get ep myservice 
+port forward to the service: kubectl port-forward service/myservice 8080:80
+Ctl-c for stopping the port forward 
+
+multi container pods cheat sheet
+Create a pod: kubectl create -f [pod-definition.yml]
+Exec into a pod: kubctl exec -it [podname] -c [containername]
+get the logs for a container: kubectl logs [podname] -c [containername]
+connect to specific container: kubectl exec -it [podname] --container [containername] -- /bin/sh 
+
+ReplicaSet
+Create replicaSet: kubectl apply -f [definition.yaml]
+list replicatest: kubectl get rs
+get info: kubectl describe rs [rsName]
+delete a replicaSet: kubectl delete -f [definition.yaml]
+same but using the replicaSetName: kubectl delete rs [rsName]
+
+deployments cheat sheet
+the imperative way: kubectl create deploy [deploymentName] --image=busybox --replicas=3 --port=80
+create deployment: kubectl apply -f [definition.yaml] 
+list deployments: kubectl get deploy 
+get info: kubectl describe deploy [deploymentName] 
+List replicasets: kubectl get deploy 
+get info: kubectl describe deploy [deploymentName] 
+List replicasets: kubectl get rs 
+delete a deployment: kubectl delete -f [definition.yaml] 
+same but using the deployment name: kubectl delete deploy [deploymentName] 
+
+daemonSets cheat sheet
+create: kubectl apply -f [definition.yaml]
+list: kubectl get ds
+getInfo: kubectl describe ds [rsName]
+delete: dubectl delete -f [definition.yaml]
+same but using the daemonSet name: kubectl delete ds [rsName]
+kubectl get pods --selector=app=demonset-example -o wide
+
+statefulSets cheat sheet
+create: kubectl apply -f [definition.yaml]
+list: kubectl get sts
+getInfo: kubectl describe sts [rsName]
+delete: dubectl delete -f [definition.yaml]
+same but using the daemonSet name: kubectl delete sts [rsName]
+kubectl get pods --selector=app=demonset-example -o wide
+kubectl get pvc
+kubectl delete pvc [pvcName]
+
+jobs cheat sheet:
+the imperative way: kubectl create job [jobName] --image=busybox
+create: kubectl apply -f [definition.yaml] 
+list: kubectl get job 
+get info: kubectl describe job [jobName] 
+delete: kubectl delete -f [definition.yaml] / kubectl delete job [jobName] 
+
+cornJobs cheat sheet
+the imperative way: kubectl create cornjob [jobName] --image=busybox --schedule="*/1 * * * *" -- bin/sh -c "date;"
+create: kubectl apply -f [definition.yaml] 
+list: kubectl get cj 
+get info: kubectl describe cj [jobName] 
+delete: kubectl delete -f [definition.yaml] / kubectl delete cj [jobName]
+
+rolling update cheat sheet
+Update a deployment: kubectl apply -f [definition.yaml]
+get the progress of the update: kubectl rollout status
+get the history of the deployment: kubectl rollout history deployment [deploymentname]
+rollback a deployment: kubectl rollout undo [deploymentname]
+rollback to a revision number: kubectl rollout undo [deploymentName] --to-revision=[revision#]
+
+clusterIP:
+create a service to expose a pod: kubectl expose po [podName] --port=80 --target-port=8080 --name=frontend
+create a service to expose a deployment: kubectl expose deploy [deployName] --port=80 --target-port=8080
+deploy the service: kubectl apply -f [definition.yaml]
+list: kubectl get svc
+info: kubectl get svc -o wide
+describe: kubectl describe svc [serviceName]
+delete: kubectl delete -f [definition.yaml] / kubectl delete svc [serviceName]
+
 
