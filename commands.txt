@@ -1,0 +1,77 @@
+user: docker login -u firozbjit
+pass: dckr_pat_PW9PcvpSJ__D5EBZam8x1N85LYs
+
+Volume:
+docker volume create volumeName
+docker volume ls
+removeVolume: docker volume rm volumeName
+run a container that will use the volume:
+		d for detach		containerName volumeNameWithPath imageName
+	docker run -d --name voltest -v myvol:/app nginx:latest
+Connect to the instance with bash:
+docker exec -it voltest bash
+
+stop and remove the container:
+docker stop voltest
+docker rm voltest
+
+docker compose:
+Build the images: docker compose build
+Start the containers: docker compose start
+Stop the containers: docker compose stop
+Build and start: docker compose up -d 
+list what's running: docker compose ps
+remove from memory: docker compose rm
+stop and remove: docker compose down
+get the logs: docker compose logs
+run a command in a container: docker compose exec [container] bash
+
+run an instance as a project: docker compose --porject-name test1 up -d
+shortcut: docker compose -p test2 up -d 
+list running projects: docker compose ls 
+copy files from the container: docker compose cp [containerID]:[SRC_PATH] [DEST_PATH]
+copy files to the container: docker compose cp [SRC_PATH] [containerID]:[DEST_PATH]
+logs of service inside container: docker compose logs -f [serviceName]
+
+push command:
+docker tag [OPTIONS] IMAGE[:TAG] [REGISTRYHOST/][USERNAME/]NAME[:TAG]
+docker push firozbjit/exopress:tagname
+eg: docker build -t firozbjit/exopress:v1 .
+	docker tag 518a41981a6a firozbjit/myImage
+    docker push firozbjit/myImage
+docker pull:
+	docker pull firozbjit/javaspringboot:v1
+	
+kubernetes:
+kubectl cluster-info
+get the current context: kubectl config current-context
+list all context: kubectl config get-contexts
+set the current context: kubectl config use-context [contextname]
+delete a context from the config file: kubectl config delete-context [contextname]
+rename: kubectl config rename-context [old-name] [new-name]
+
+resource commands:
+kubectl run mynginx --image=nginx --port=80
+kubectl create deploy mynginx --image=nginx --port=80 --replicas=3
+kubectl create service nodeport myservice --targetPort=8080
+kubectldelete pod nginx
+
+imperative way:
+kubectl create -f deploy-example.yaml
+declarative way:
+kubectl create -f deploy-example.yaml
+
+kubctl-Namespace cheat sheet:
+list all namespaces: kubtl get namespaces
+shortcut: kubectl get ns
+set the current context to use a namespace: kubectl config set-context --current --namespace=[namespaceName]
+create a namespace: kubectl create ns [namespaceName]
+delete: kubctl delete ns [namespaceName]
+list all pods in all namespaces: kubectl get pods --all-namespaces
+get the pods from the default namespace: kuctl get pods --namespace=kube-system or kubectl get pods -n kube-system
+change namespace: kubectl config set-context --current --namespace=kube-system
+nodes:
+kubectl get nodes
+kubectl describe node 
+
+
