@@ -1,5 +1,40 @@
+docker info 
+docker version
+docker login 
+
 user: docker login -u firozbjit
 pass: dckr_pat_PW9PcvpSJ__D5EBZam8x1N85LYs
+
+Running and stopping: 
+pull an image from a registry: docker pull [imageName]
+run containers: docker run [imageName]
+detached mode: docker run -d [imageName]
+Start stoped containers: docker start [containerName]
+list running containers: docker ps
+list running and stopped containers: docker ps -a 
+stop containers: docker stop [containerName]
+kill: docker kill [containerName]
+get image info: docker image inspect [imageName]
+
+run with limits
+docker run --memory="256m" nginx 
+docker run --cpus=".5" nginx 
+
+docker run -it -- /bin/bash 
+docker run -it -- microsoft/powershell:nanoserver
+attach to a running container: docker container exec -it [containerName] -- bash
+
+removes stopped containers: docker rm [containerName]
+removes all stopped containers: docker rm $(docker ps -a -q)
+list: docker images
+deletes the image: docker rmi [imageName]
+removes all images not in use: docker system prune -a
+
+docker build:
+ubilds an image using a Dockerfile located in the same folder: docker build -t [name:tag} .
+builds an image using a Dockerfile located in a different folder: docker build -t [name: tag] -f [fileName]
+tag an existing image: docker tag [imageName] [name:tag]
+
 
 Volume:
 docker volume create volumeName
@@ -193,4 +228,17 @@ from a folder: kubectl create cm [name] --from-file=config/
 list: kubectl get cm 
 save a configMap in a YAML: kubectl get cm [name] -o YAML
 delete a cm: kubectl delete -f [cf.yaml]
+
+Secrets cheat Sheet:
+the imperative way: kubectl create secret generic [secretName] --from-literal=STATE=Michigan
+kubectl apply -f [secret.yaml]
+kubectl get secrets
+
+probes
+kubectl describe pod [liveness PodName]
+force delete: kubectl delete -f prob-pod.yaml --force --grace-period=0
+
+HPA cheat sheet
+imparative way: kubectl autoscale deployment [name] --cpu-percent=50 --min=3 --max=10
+list: kubectl get hpa [name]
 
