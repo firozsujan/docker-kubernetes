@@ -166,4 +166,31 @@ info: kubectl get svc -o wide
 describe: kubectl describe svc [serviceName]
 delete: kubectl delete -f [definition.yaml] / kubectl delete svc [serviceName]
 
+nodeport cheat sheet
+create a service to expose a pod: kubectl expose po [podName] --port=80 --target-port=8080 --type=NodePort
+create a service to expose a deployment: kubectl expose deploy [deployName] --port=80 --target-port=8080
+deploy the service: kubectl apply -f [definition.yaml]
+list: kubectl get svc
+info: kubectl get svc -o wide
+describe: kubectl describe svc [serviceName]
+delete: kubectl delete -f [definition.yaml] / kubectl delete svc [serviceName]
+
+pv and pvc cheat sheet
+deploy the PVs and PVCs: kubectl apply -f [definition.yaml]
+pv list: kubectl get pv
+pvc list: kubectl get pvc
+describe: kubectl describe pv/pvc
+delete: kubectl describe pv/pvc [name]
+
+storageClass:
+list: kubectl get sc 
+
+configMaps cheat sheet:
+kubectl create configmap literal-example --from-literal="city=Ann Arbor" --from-literal=state=Michigan
+kubectl apply -f [cf.yaml]
+from a file: kubectl create cm [name] --from-file=muconfig.txt
+from a folder: kubectl create cm [name] --from-file=config/
+list: kubectl get cm 
+save a configMap in a YAML: kubectl get cm [name] -o YAML
+delete a cm: kubectl delete -f [cf.yaml]
 
